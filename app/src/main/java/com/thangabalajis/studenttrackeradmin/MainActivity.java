@@ -3,10 +3,14 @@ package com.thangabalajis.studenttrackeradmin;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import com.parse.FindCallback;
@@ -23,11 +27,15 @@ public class MainActivity extends AppCompatActivity {
 
     ArrayList<String> ar;
     ListView lv;
+    EditText etSearch;
+    ArrayAdapter<String> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        etSearch = findViewById(R.id.etSearch);
         ar = new ArrayList<>();
         try {
             Parse.initialize(new Parse.Configuration.Builder(this)
@@ -50,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
                     }
 
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this,
+                    adapter = new ArrayAdapter<String>(MainActivity.this,
                             android.R.layout.simple_list_item_1, ar);
 
                     lv.setAdapter(adapter);
@@ -78,6 +86,23 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
+
+        etSearch.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {
+
+                // you can call or do what you want with your EditText here
+
+
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                MainActivity.this.adapter.getFilter().filter(s);
+            }
+        });
+
 
     }
 }

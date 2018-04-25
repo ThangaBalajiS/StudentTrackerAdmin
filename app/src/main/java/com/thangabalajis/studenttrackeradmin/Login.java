@@ -24,7 +24,7 @@ public class Login extends AppCompatActivity {
     }
 
     public void login(View view){
-        if (etUname.getText().toString() == USER_NAME && etPw.getText().toString() == PASS_WORD ){
+        if (etUname.getText().toString().equals(USER_NAME)&& etPw.getText().toString().equals(PASS_WORD)){
             Intent i = new Intent(this,MainActivity.class);
             startActivity(i);
         }else{
